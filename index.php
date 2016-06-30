@@ -17,14 +17,11 @@
 	<h1>Installer</h1>
 	<div id="wizard">
 
-		<h3>Gereal Setup</h3>
+		<h3>General Setup</h3>
 
 		<section>
-			<h1>Gereal Setup</h1>
 			<p>This wizard will guide you through the installation and configuration.</p>
 			<h2><?php echo  shell_exec("php $project_root_path/artisan  --version")?></h2>
-
-
 <pre>sudo chmod 775 <?php echo $project_root_path ?>/config
 sudo chmod 775 <?php echo $project_root_path ?>/config/app.php
 sudo chmod 775  <?php echo $project_root_path ?>/storage
@@ -39,8 +36,6 @@ sudo chmod 775 -Rf <?php echo $project_root_path ?>/storage/*
 				$app_storage_cache = realpath($project_root_path."/storage/framework/cache");
 				$app_storage_cache = realpath($project_root_path."/storage/framework/views");
 				$app_storage_logs = realpath($project_root_path."/storage/logs");
-
-
 				?>
 
 
