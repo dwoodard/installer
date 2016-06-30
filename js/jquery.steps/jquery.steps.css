@@ -143,7 +143,7 @@
     display: block;
     margin: 0.5em;
     min-height: 35em;
-    overflow: hidden;
+    overflow-y: scroll;
     position: relative;
     width: auto;
 
@@ -220,10 +220,9 @@
 
 .wizard > .actions
 {
-    position: relative;
-    display: block;
-    text-align: right;
-    width: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
 }
 
 .wizard.vertical > .actions
