@@ -1,0 +1,7 @@
+li.checkmark {
+	background:url("images/checkmark-icon.png") no-repeat 0 50%;
+
+}
+li.error {
+	background:url("images/x.png") no-repeat 0 50%;
+}
