@@ -17,7 +17,7 @@
 	<h1>Installer</h1>
 	<div id="wizard">
 
-		<h3>General Setup</h3>
+		<h3>General</h3>
 
 		<section>
 			<p>This wizard will guide you through the installation and configuration.</p>
@@ -95,9 +95,7 @@ sudo chmod 775 -Rf <?php echo $project_root_path ?>/storage/*
 
 			</section>
 
-
 		</div>
-
 
 
 
