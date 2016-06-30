@@ -1,7 +1,13 @@
+.checklist li {
+    padding-left: 40px !important;
+    list-style-type: none;
+    margin-bottom: 20px;
+}
+
 li.checkmark {
-	background:url("images/checkmark-icon.png") no-repeat 0 50%;
+	background:url("../images/checkmark-icon.png") no-repeat 0 50%;
 
 }
 li.error {
-	background:url("images/x.png") no-repeat 0 50%;
+	background:url("../images/x.png") no-repeat 0 50%;
 }
