@@ -102,5 +102,9 @@ QUEUE_CONTENT;
 
 file_put_contents($queue_path, $queue_content);
 
-
+$result['queue'] = array(
+	// 'success' => true,
+	// 'pwd' => shell_exec('pwd'),
+	// 'project_root_path' => $project_root_path
+	);
  ?>

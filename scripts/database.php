@@ -13,7 +13,6 @@ if (!$_POST || !$project_root_path) {
 	die("missing Data");
 }
 
-
 $sql = 'CREATE DATABASE IF NOT EXISTS ' . $_POST['database'];
 
 
@@ -28,16 +27,13 @@ if ($mysqli->connect_errno) {
 
 /* Create table doesn't return a resultset */
 if ($mysqli->query($sql) === TRUE) {
-    echo json_encode(array('status' => "Database Created successfully.") );
+    $result['database']['created_status'] = json_encode(array('status' => "Database Created successfully.") );
 }
 else{
-	echo json_encode(array('status' => "Error Creating Database."));
+	$result['database']['created_status'] = json_encode(array('status' => "Error Creating Database."));
 }
 
 $mysqli->close();
-
-
-
 
 $database_path = $project_root_path.'/app/config/database.php';
 
@@ -139,6 +135,15 @@ DB_CONTENT;
 DB_CONTENT;
 
 file_put_contents($database_path, $db_content);
+
+$result['database'] = array(
+	'success' => true,
+	'file' => __FILE__,
+	// 'pwd' => shell_exec('pwd'),
+	// 'project_root_path' => $project_root_path,
+	'migration' => shell_exec("php $project_root_path/artisan migrate "),
+	);
+
 
 
  ?>
