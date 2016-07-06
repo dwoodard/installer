@@ -21,15 +21,15 @@
 
 		<section>
 			<p>This wizard will guide you through the installation and configuration.</p>
-			<h2><?php echo  shell_exec("php $project_root_path/artisan  --version")?></h2>
-			<pre>sudo chmod 775 <?php echo $project_root_path ?>/config
-				sudo chmod 775 <?php echo $project_root_path ?>/config/app.php
-				sudo chmod 775  <?php echo $project_root_path ?>/storage
-				sudo chmod 775 -Rf <?php echo $project_root_path ?>/storage/*
-			</pre>
-			
+			<h2><?php echo shell_exec("php $project_root_path/artisan --version")?></h2>
+<pre>sudo chmod 775 <?php echo $project_root_path ?>/config
+sudo chmod 775 <?php echo $project_root_path ?>/config/app.php
+sudo chmod 775  <?php echo $project_root_path ?>/storage
+sudo chmod 775 -Rf <?php echo $project_root_path ?>/storage/*
+</pre>
+
 			<p>Make sure Files exsist and directories are writable:</p>
-			
+
 			<?php
 			$env = realpath($project_root_path."/.env");
 			$vendor = realpath($project_root_path."/vendor");
@@ -113,7 +113,7 @@
 				// stepsOrientation: "vertical",
 				onCanceled: function (event) { console.log(event);},
 				onFinishing: function (event, currentIndex) {
-				
+
 					$.ajax({
 						type: "POST",
 						url: "install.php",
@@ -121,31 +121,21 @@
 						dataType: "json",
 						success: function(result) {
 							console.log(result);
-
-							// window.location = window.location.protocol + "//" + window.location.host;
+							return true;
+						},
+						error: function(result){
+							console.log(result);
 						}
+
 					});
 
-					console.log(event, currentIndex); return true;
+					// console.log(event, currentIndex);
+					
 
 				},
 				onFinished: function (event, currentIndex) {
-					console.log(event, currentIndex);
-
-					
-
-					// $.ajax({
-					// 	type: "GET",
-					// 	url: location.protocol + '//' + window.location.host + '/app/install',
-					// 	success: function (data) {
-					// 		if (data) {
-					// 			console.log(data);
-					// 			if (data.status == 'success') {
-					// 					// window.location = window.location.protocol +"//" + window.location.host;
-					// 				}
-					// 			};
-					// 		}
-					// 	});
+					// console.log(event, currentIndex);
+					window.location = window.location.protocol + "//" + window.location.host;
 				}
 
 

@@ -13,6 +13,8 @@ if (!$_POST || !$project_root_path) {
 	die("missing Data");
 }
 
+$result['database'] =  array();
+
 $sql = 'CREATE DATABASE IF NOT EXISTS ' . $_POST['database'];
 
 
@@ -27,123 +29,28 @@ if ($mysqli->connect_errno) {
 
 /* Create table doesn't return a resultset */
 if ($mysqli->query($sql) === TRUE) {
-    $result['database']['created_status'] = json_encode(array('status' => "Database Created successfully.") );
+    $result['database']['created_status'] = "Database Created successfully.";
+    $result['database']['created'] = true;
 }
 else{
-	$result['database']['created_status'] = json_encode(array('status' => "Error Creating Database."));
+	$result['database']['created_status'] = "Error Creating Database.";
+    $result['database']['created'] = false;
 }
 
 $mysqli->close();
 
-$database_path = $project_root_path.'/app/config/database.php';
+$_POST['port'] = ($_POST['port'] ==  '' ? 3306 : $_POST['port']);
 
-$db_content = <<<DB_CONTENT
-<?php
-
-return array(
-	'fetch' => PDO::FETCH_CLASS,
-	'default' => '{$_POST['database-type']}',
-	'connections' => array(
-
-DB_CONTENT;
+exec("sed -i 's/DB_CONNECTION=.*/DB_CONNECTION={$_POST['database-type']}/g' ".escapeshellarg($file));
+exec("sed -i 's/DB_HOST=.*/DB_HOST={$_POST['host']}/g' ".escapeshellarg($file));
+exec("sed -i 's/DB_PORT=.*/DB_PORT={$_POST['port']}/g' ".escapeshellarg($file));
+exec("sed -i 's/DB_DATABASE=.*/DB_DATABASE={$_POST['database']}/g' ".escapeshellarg($file));
+exec("sed -i 's/DB_USERNAME=.*/DB_USERNAME={$_POST['user']}/g' ".escapeshellarg($file));
+exec("sed -i 's/DB_PASSWORD=.*/DB_PASSWORD={$_POST['password']}/g' ".escapeshellarg($file));
 
 
-switch ($_POST['database-type']) {
-
-
-	case 'sqlite':
-
-	$db_content .= <<<DB_CONTENT
-		'sqlite' => array(
-			'driver'   => 'sqlite',
-			'database' => __DIR__.'/../database/production.sqlite',
-			'prefix'   => '',
-		),
-DB_CONTENT;
-		break;
-
-
-
-	case 'mysql':
-	$db_content .= <<<DB_CONTENT
-		'mysql' => array(
-			'driver'    => 'mysql',
-			'host'      => '{$_POST['host']}',
-			'database'  => '{$_POST['database']}',
-			'username'  => '{$_POST['user']}',
-			'password'  => '{$_POST['password']}',
-			'charset'   => 'utf8',
-			'collation' => 'utf8_unicode_ci',
-			'prefix'    => '',
-		),
-DB_CONTENT;
-		break;
-
-
-
-	case 'pgsql':
-	$db_content .= <<<DB_CONTENT
-		'pgsql' => array(
-			'driver'   => 'pgsql',
-			'host'      => '{$_POST['host']}',
-			'database'  => '{$_POST['database']}',
-			'username'  => '{$_POST['user']}',
-			'password'  => '{$_POST['password']}',
-			'charset'  => 'utf8',
-			'prefix'   => '',
-			'schema'   => 'public',
-		),
-DB_CONTENT;
-		break;
-
-
-
-	case 'sqlsrv':
-	$db_content .= <<<DB_CONTENT
-		'sqlsrv' => array(
-			'driver'   => 'sqlsrv',
-			'host'      => '{$_POST['host']}',
-			'database'  => '{$_POST['database']}',
-			'username'  => '{$_POST['user']}',
-			'password'  => '{$_POST['password']}',
-			'prefix'   => '',
-		),
-DB_CONTENT;
-		break;
-}
-
-
-
-
-	$db_content .= <<<DB_CONTENT
-
-	),
-	'migrations' => 'migrations',
-	'redis' => array(
-
-		'cluster' => true,
-
-		'default' => array(
-			'host'     => '127.0.0.1',
-			'port'     => 6379,
-			'database' => 0,
-		),
-
-	),
-
-);
-DB_CONTENT;
-
-file_put_contents($database_path, $db_content);
-
-$result['database'] = array(
-	'success' => true,
-	'file' => __FILE__,
-	// 'pwd' => shell_exec('pwd'),
-	// 'project_root_path' => $project_root_path,
-	'migration' => shell_exec("php $project_root_path/artisan migrate "),
-	);
-
-
+$result['database']['success'] = true;
+$result['database']['file'] = $file;
+$result['database']['migration'] = shell_exec("php $project_root_path/artisan migrate ");
 
  ?>

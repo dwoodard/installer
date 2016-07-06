@@ -13,11 +13,7 @@ if (!$_POST || !$project_root_path) {
 	die("missing Data");
 }
 
-$result['env'] = array(
-	// 'file' => __FILE__,
-	// 'pwd' => shell_exec('pwd'),
-	// 'project_root_path' => $project_root_path
-	);
+$result['env'] = array();
 
 
 
@@ -25,14 +21,21 @@ $result['env'] = array(
 if (!file_exists($project_root_path. '/.env')) {
 
 	//copy file from default .env.example
-	copy($project_root_path . '/.env.example', $project_root_path . '/.env');
+	$result['env']['file_copied'] = copy($project_root_path . '/.env.example', $project_root_path . '/.env');
+
 
 	$result['env']['has_env'] = true;
 } else{
 	$result['env']['has_env'] = true;
+	$result['env']['file_copied'] = false;
 
 }
 
+$result['env']['app_key'] = str_replace(array("\r", "\n"), '', shell_exec("cat {$project_root_path}'/.env'|grep APP_KEY"));
+
+if($result['env']['app_key'] == "APP_KEY=SomeRandomString"){
+	$result['env']['app_key'] = shell_exec("php $project_root_path/artisan key:generate");
+}
 
 
 
