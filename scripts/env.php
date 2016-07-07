@@ -22,13 +22,10 @@ if (!file_exists($project_root_path. '/.env')) {
 
 	//copy file from default .env.example
 	$result['env']['file_copied'] = copy($project_root_path . '/.env.example', $project_root_path . '/.env');
-
-
 	$result['env']['has_env'] = true;
 } else{
 	$result['env']['has_env'] = true;
 	$result['env']['file_copied'] = false;
-
 }
 
 $result['env']['app_key'] = str_replace(array("\r", "\n"), '', shell_exec("cat {$project_root_path}'/.env'|grep APP_KEY"));

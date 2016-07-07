@@ -13,14 +13,9 @@ if (!$_POST || !$project_root_path) {
 	die("missing Data");
 }
 
-
-
-
-
 $resource_path = $project_root_path.'/'. $_POST['media-path'];
 
 $original = $resource_path . '/original';
-
 
 if (!file_exists($resource_path) and !is_dir($resource_path)) {
   $oldmask = umask(0);
@@ -28,15 +23,10 @@ if (!file_exists($resource_path) and !is_dir($resource_path)) {
   umask($oldmask);
 }
 
-
 if (!file_exists($original) and !is_dir($original)) {
-  
   $oldmask = umask(0);
   mkdir($original,0777);
   umask($oldmask);
 }
 
-
-
-
- ?>
+?>

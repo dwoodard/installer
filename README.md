@@ -21,17 +21,30 @@ goto url project.dev/installer/index.php
 
 ## Scripts
 
+Scripts give you the abilty to add diffent functionality
+
+```
+\---installer
+    +---css
+    +---images
+    +---js
+    |   +---bootstrap
+    \---scripts
+    	+---
+```
+
 ### Workflow
 index.php uses a jquery wizard plugin called  [jquery.steps](https://github.com/rstaib/jquery-steps/wiki)
 * `index.php` is where you add inputs and tabs to wizard 
-* Give **inputs** a name which will be use by `$_POST`
 
+* Give **inputs** a name which will be use by `$_POST`
 
 ````html
 <input type="text" name="field"/>` is used server-side like `$_POST['field']
 ````
 
 install.php
+
 ````php
 include $install_src_path . '/database.php';
 include $install_src_path . '/queue.php';

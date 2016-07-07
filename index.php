@@ -7,18 +7,22 @@
 	<meta charset="utf-8">
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
+	<!-- steps -->
 	<script src="js/jquery.steps/jquery.steps.js"></script>
-	<link href="js/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 	<link rel="stylesheet" href="js/jquery.steps/jquery.steps.css">
-	<link rel="stylesheet" href="css/main.css">
 
+	<!-- bootstrap -->
+	<script src="js/bootstrap/js/bootstrap.min.js"></script>
+	<link href="js/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+	<link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+
 	<h1>Installer</h1>
+
 	<div id="wizard">
-
 		<h3>General</h3>
-
 		<section>
 			<p>This wizard will guide you through the installation and configuration.</p>
 			<h2><?php echo shell_exec("php $project_root_path/artisan --version")?></h2>
@@ -55,10 +59,39 @@ sudo chmod 775 -Rf <?php echo $project_root_path ?>/storage/*
 				<li class="<?php echo is_writable($app_storage_cache) ? "checkmark" : "error" ?>"><?php echo $project_root_path ?>/storage/framework/views</li>
 			</ul>
 		</section>
+		<!-- /General -->
+
+		<h3>App</h3>
+		<section>
+			<div class="row">
+				<div class="span2">
+					<label><strong>App Environment</strong></label>
+					<select id="app_env" name='app_env' style="width:125px;">
+						<option value="local">local</option>
+						<option value="production">production</option>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span2">
+					<label><strong>Debug</strong></label>
+					<select id="app_debug" name='app_debug' style="width:125px;">
+						<option value="true">true</option>
+						<option value="false">false</option>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span2">
+					<label><strong>App Url</strong></label>
+					<input type="text" id="app_url" name='app_url' value="http://localhost" style="width:125px;">
+				</div>
+			</div>
+		</section>
+		<!-- /App -->
 
 		<h3>Database</h3>
 		<section>
-
 			<h1>Database</h1>
 
 			<div class="wizard-input-section">
@@ -96,23 +129,42 @@ sudo chmod 775 -Rf <?php echo $project_root_path ?>/storage/*
 							<input type="password"  name="password" placeholder="password" value="root" />
 						</div>
 					</div>
+			</div>
+		</section>
+		<!-- /Database -->
+	</div>
+
+	<div id="successModal" class="modal fade" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Success!</h4>
 				</div>
 
+				<div class="modal-body">
+					<p>asdf</p>
+				</div>
 
-			</section>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<a href="<?php echo "http://" . $_SERVER['SERVER_NAME']; ?>" type="button" class="btn btn-primary">Done</a>
+				</div><!-- /.modal-footer -->
 
-		</div>
-
-
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 
 		<script>
+		var data;
 			$("#wizard").steps({
 				headerTag: "h3",
 				bodyTag: "section",
 				transitionEffect: "slideLeft",
 				// stepsOrientation: "vertical",
-				onCanceled: function (event) { console.log(event);},
-				onFinishing: function (event, currentIndex) {
+				onFinished: function (event, currentIndex) {
+					console.log(event, currentIndex);
 
 					$.ajax({
 						type: "POST",
@@ -120,22 +172,25 @@ sudo chmod 775 -Rf <?php echo $project_root_path ?>/storage/*
 						data: $(":input").serialize(),
 						dataType: "json",
 						success: function(result) {
+							data = result;
+
+							/**
+							* Once finished do what?
+							*/
+
 							console.log(result);
-							return true;
+							$('#successModal').modal({
+								show: true
+							});
+
+							//window.location = window.location.protocol + "//" + window.location.host;
+
 						},
 						error: function(result){
 							console.log(result);
 						}
 
 					});
-
-					// console.log(event, currentIndex);
-					
-
-				},
-				onFinished: function (event, currentIndex) {
-					// console.log(event, currentIndex);
-					window.location = window.location.protocol + "//" + window.location.host;
 				}
 
 
