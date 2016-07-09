@@ -70,16 +70,16 @@ switch ($_POST['database-type']) {
 
 
 
-exec("sed -i 's/DB_CONNECTION=.*/DB_CONNECTION={$_POST['database-type']}/g' ".escapeshellarg($file));
-exec("sed -i 's/DB_HOST=.*/DB_HOST={$_POST['host']}/g' ".escapeshellarg($file));
-exec("sed -i 's/DB_PORT=.*/DB_PORT={$_POST['port']}/g' ".escapeshellarg($file));
-exec("sed -i 's/DB_DATABASE=.*/DB_DATABASE={$_POST['database']}/g' ".escapeshellarg($file));
-exec("sed -i 's/DB_USERNAME=.*/DB_USERNAME={$_POST['user']}/g' ".escapeshellarg($file));
-exec("sed -i 's/DB_PASSWORD=.*/DB_PASSWORD={$_POST['password']}/g' ".escapeshellarg($file));
+exec("sed -i 's/DB_CONNECTION=.*/DB_CONNECTION={$_POST['database-type']}/g' ". escapeshellarg($env));
+exec("sed -i 's/DB_HOST=.*/DB_HOST={$_POST['host']}/g' ". escapeshellarg($env));
+exec("sed -i 's/DB_PORT=.*/DB_PORT={$_POST['port']}/g' ". escapeshellarg($env));
+exec("sed -i 's/DB_DATABASE=.*/DB_DATABASE={$_POST['database']}/g' ". escapeshellarg($env));
+exec("sed -i 's/DB_USERNAME=.*/DB_USERNAME={$_POST['user']}/g' ". escapeshellarg($env));
+exec("sed -i 's/DB_PASSWORD=.*/DB_PASSWORD={$_POST['password']}/g' ". escapeshellarg($env));
 
 
 $result['database']['success'] = true;
-// $result['database']['file'] = $file;
+// $result['database']['file'] = $env;
 $result['database']['migration'] = shell_exec("php $project_root_path/artisan migrate ");
 
 ?>

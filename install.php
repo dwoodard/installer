@@ -11,6 +11,10 @@ $install_src_path = realpath(dirname(__file__) . "/scripts/");
 //used in the other install scripts exported json at the end.
 $result = array();
 
+$env = $project_root_path. '/.env';
+
+
+
 //.env needs to exsist first for private variables
 include $install_src_path . '/env.php';
 
