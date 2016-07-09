@@ -15,10 +15,11 @@ if (!$_POST || !$project_root_path) {
 
 $result['env'] = array();
 
+$envFile = $project_root_path. '/.env'
 
 
 //if env file don't exisit create it
-if (!file_exists($project_root_path. '/.env')) {
+if (!file_exists($envFile)) {
 
 	//copy file from default .env.example
 	$result['env']['file_copied'] = copy($project_root_path . '/.env.example', $project_root_path . '/.env');
@@ -34,5 +35,7 @@ if($result['env']['app_key'] == "APP_KEY=SomeRandomString"){
 	$result['env']['app_key'] = shell_exec("php $project_root_path/artisan key:generate");
 }
 
-
+exec("sed -i 's/APP_ENV=.*/APP_ENV={$_POST['app_env']}/g' ".escapeshellarg($envFile));
+exec("sed -i 's/APP_DEBUG=.*/APP_DEBUG={$_POST['app_debug']}/g' ".escapeshellarg($envFile));
+exec("sed -i 's/APP_URL=.*/APP_URL={$_POST['app_url']}/g' ".escapeshellarg($envFile));
 
