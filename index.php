@@ -48,7 +48,7 @@ sudo chmod 775 -Rf <?php echo $project_root_path ?>/storage/*
 
 
 			<ul class="checklist">
-				<li class="<?php echo file_exists($env) ? "checkmark" : "error" ?>"><?php echo $project_root_path ?>/.env</li>
+				<li class="<?php echo file_exists($env) ? "checkmark" : "error" ?>"><?php echo $project_root_path ?>/.env - (This will be generated if it doesn't exsist)</li>
 				<li class="<?php echo file_exists($vendor) ? "checkmark" : "error" ?>"><?php echo $project_root_path ?>/vendor</li>
 				<li class="<?php echo is_writable($app_config) ? "checkmark" : "error" ?>"><?php echo $project_root_path ?>/config</li>
 				<li class="<?php echo is_writable($app_config_app) ? "checkmark" : "error" ?>"><?php echo $project_root_path ?>/config/app.php</li>
