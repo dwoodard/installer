@@ -63,6 +63,8 @@ sudo chmod 775 -Rf <?php echo $project_root_path ?>/storage/*
 
 		<h3>App</h3>
 		<section>
+	
+
 			<div class="row">
 				<div class="span2">
 					<label><strong>App Environment</strong></label>
@@ -87,6 +89,9 @@ sudo chmod 775 -Rf <?php echo $project_root_path ?>/storage/*
 					<input type="text" id="app_url" name='app_url' value="http://localhost" style="width:125px;">
 				</div>
 			</div>
+		
+
+
 		</section>
 		<!-- /App -->
 
@@ -134,6 +139,14 @@ sudo chmod 775 -Rf <?php echo $project_root_path ?>/storage/*
 		<!-- /Database -->
 	</div>
 
+
+
+	<script id="result-template" type="text/template">
+		<div id="results"></div>
+	</script>
+
+
+
 	<div id="successModal" class="modal fade" tabindex="-1" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -143,9 +156,9 @@ sudo chmod 775 -Rf <?php echo $project_root_path ?>/storage/*
 					<h4 class="modal-title" id="myModalLabel">Success!</h4>
 				</div>
 
-				<div class="modal-body">
-					<p>asdf</p>
-				</div>
+				<div id="result" class="modal-body">
+
+					</div>
 
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -182,6 +195,9 @@ sudo chmod 775 -Rf <?php echo $project_root_path ?>/storage/*
 							$('#successModal').modal({
 								show: true
 							});
+							console.log(result.env.app_key);
+							
+							$('#result').html(result.env.app_key)
 
 							//window.location = window.location.protocol + "//" + window.location.host;
 

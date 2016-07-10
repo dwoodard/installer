@@ -15,7 +15,7 @@ if (!$_POST || !$project_root_path) {
 
 $result['env'] = array();
 
-$envFile = $project_root_path. '/.env'
+
 
 
 //if env file don't exisit create it

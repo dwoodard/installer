@@ -6,6 +6,7 @@
 
 $project_root_path = realpath(dirname(dirname(dirname(__file__))));
 $install_src_path = realpath(dirname(__file__) . "/scripts/");
+$envFile = $project_root_path. '/.env';
 
 
 //used in the other install scripts exported json at the end.
