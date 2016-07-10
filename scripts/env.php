@@ -13,7 +13,12 @@ if (!$_POST || !$project_root_path) {
 	die("missing Data");
 }
 
-$result['env'] = array();
+$result['env'] = array(
+	"path" => $env,
+	"app_env"=>$_POST['app_env'],
+	"app_debug"=>$_POST['app_debug'],
+	"app_url"=> addslashes($_POST['app_url'])
+);
 
 
 
@@ -39,3 +44,6 @@ exec("sed -i 's/APP_ENV=.*/APP_ENV={$_POST['app_env']}/g' ".escapeshellarg($envF
 exec("sed -i 's/APP_DEBUG=.*/APP_DEBUG={$_POST['app_debug']}/g' ".escapeshellarg($envFile));
 exec("sed -i 's/APP_URL=.*/APP_URL={$_POST['app_url']}/g' ".escapeshellarg($envFile));
 
+exec("sed -i 's/APP_ENV=.*/APP_ENV={$_POST['app_env']}/g'". escapeshellarg($env));
+exec("sed -i 's/APP_DEBUG=.*/APP_DEBUG={$_POST['app_debug']}/g'". escapeshellarg($env));
+exec("sed -i 's/APP_URL=.*/APP_URL={$result['env']['app_url']}/g'". escapeshellarg($env));
