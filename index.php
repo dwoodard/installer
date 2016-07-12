@@ -27,9 +27,9 @@
 			<p>This wizard will guide you through the installation and configuration.</p>
 			<h2><?php echo shell_exec("php $project_root_path/artisan --version")?></h2>
 <pre>sudo chmod 775 <?php echo $project_root_path ?>/config
-sudo chmod 775 <?php echo $project_root_path ?>/config/app.php
-sudo chmod 775  <?php echo $project_root_path ?>/storage
-sudo chmod 775 -Rf <?php echo $project_root_path ?>/storage/*
+	sudo chmod 775 <?php echo $project_root_path ?>/config/app.php
+	sudo chmod 775  <?php echo $project_root_path ?>/storage
+	sudo chmod 775 -Rf <?php echo $project_root_path ?>/storage/*
 </pre>
 
 			<p>Make sure Files exsist and directories are writable:</p>
@@ -61,80 +61,117 @@ sudo chmod 775 -Rf <?php echo $project_root_path ?>/storage/*
 		</section>
 		<!-- /General -->
 
+
+
 		<h3>App</h3>
 		<section>
-	
+			<form class="form-horizontal">
+				<legend>App Settings</legend>
+				<fieldset>
 
-			<div class="row">
-				<div class="span2">
-					<label><strong>App Environment</strong></label>
-					<select id="app_env" name='app_env' style="width:125px;">
-						<option value="local">local</option>
-						<option value="production">production</option>
-					</select>
-				</div>
-			</div>
-			<div class="row">
-				<div class="span2">
-					<label><strong>Debug</strong></label>
-					<select id="app_debug" name='app_debug' style="width:125px;">
-						<option value="true">true</option>
-						<option value="false">false</option>
-					</select>
-				</div>
-			</div>
-			<div class="row">
-				<div class="span2">
-					<label><strong>App Url</strong></label>
-					<input type="text" id="app_url" name='app_url' value="http://localhost" style="width:125px;">
-				</div>
-			</div>
-		
 
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="app_env">App Environment</label>
+						<div class="col-md-4">
+							<div class="radio">
+								<label for="app_env-0">
+									<input type="radio" name="app_env" id="app_env-0" value="local" checked="checked">
+									local
+								</label>
+							</div>
+							<div class="radio">
+								<label for="app_env-1">
+									<input type="radio" name="app_env" id="app_env-1" value="production">
+									production
+								</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="app_debug">Debug</label>
+						<div class="col-md-2">
+							<select id="app_debug" name="app_debug" class="form-control">
+								<option value="true">true</option>
+								<option value="false">false</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="app_url">App Url</label>
+						<div class="col-md-5">
+							<input id="app_url" name="app_url" type="text" placeholder="http://localhost" class="form-control input-md">
+
+						</div>
+					</div>
+
+				</fieldset>
+			</form>
 
 		</section>
 		<!-- /App -->
 
 		<h3>Database</h3>
 		<section>
-			<h1>Database</h1>
+			
 
-			<div class="wizard-input-section">
-				<p>
-					Which database would you like to use.
-				</p>
-				<div class="control-group">
-					<select id="database-type" name='database-type'>
-						<option value="mysql">MySQL</option>
-						<option value="sqlite">SQLite3</option>
-						<option value="sqlsrv">MSSQL Server</option>
-						<option value="pgsql">Postgres</option>
-					</select>
-					<div class="row">
-						<div class="span3">
-							<label><strong>Host</strong></label>
-							<input type="text" name="host" value="<?php echo $_SERVER['SERVER_NAME']; ?>" placeholder="localhost" />
-						</div>
-						<div class="span1">
-							<label><strong>Port</strong></label>
-							<input style="width:45px;" type="text" name="port" placeholder="3306" />
-						</div>
-						<div class="span1">
-							<label><strong>Database</strong></label>
-							<input style="width:125px;" type="text" name="database" placeholder="mydb" value="mydb" />
+			<div class="col-md-12">
+				<form class="form-horizontal">
+					<legend>Database</legend>
+					<p>Which database would you like to use.</p>
+					<div class="form-group">
+						<label class="col-md-2" for="database-type">Database Type</label>
+						<div class="col-md-10">
+							<select id="database-type" name='database-type' class="form-control">
+								<option value="mysql">MySQL</option>
+								<option value="sqlite">SQLite3</option>
+								<option value="sqlsrv">MSSQL Server</option>
+								<option value="pgsql">Postgres</option>
+							</select>
 						</div>
 					</div>
-					<div class="row">
-						<div class="span3">
-							<label><strong>Username</strong></label>
-							<input type="text"  name="user" placeholder="root" value="root" />
-						</div>
-						<div class="span2">
-							<label><strong>Password</strong></label>
-							<input type="password"  name="password" placeholder="password" value="root" />
+					<div class="form-group">
+						<label class="col-md-2" for="host">Host</label>
+						<div class="col-md-10">
+							<input type="text" id="host" name="host" value="<?php echo $_SERVER['SERVER_NAME']; ?>" placeholder="localhost" class="form-control input-md"/>
 						</div>
 					</div>
+					<div class="form-group">
+						<label class="col-md-2" for="port">Port</label>
+						<div class="col-md-10">
+							<input type="text" id="port" name="port" placeholder="3306" class="form-control input-md"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2" for="database">Database</label>
+						<div class="col-md-10">
+							<input type="text" id="database" name="database" placeholder="mydb" value="mydb" class="form-control input-md"/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-md-2" for="User">User</label>
+						<div class="col-md-10">
+							<input type="text" id="User" name="User" placeholder="mydb" value="root" class="form-control input-md"/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-md-2" for="Password">Password</label>
+						<div class="col-md-10">
+							<input type="password" id="Password" name="Password" placeholder="mydb" value="root" class="form-control input-md"/>
+						</div>
+					</div>
+				</form>
 			</div>
+			
+
+
+
+
+
+
 		</section>
 		<!-- /Database -->
 	</div>
@@ -158,7 +195,7 @@ sudo chmod 775 -Rf <?php echo $project_root_path ?>/storage/*
 
 				<div id="result" class="modal-body">
 
-					</div>
+				</div>
 
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -169,12 +206,12 @@ sudo chmod 775 -Rf <?php echo $project_root_path ?>/storage/*
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 
-		<script>
+	<script>
 		var data;
-			$("#wizard").steps({
-				headerTag: "h3",
-				bodyTag: "section",
-				transitionEffect: "slideLeft",
+		$("#wizard").steps({
+			headerTag: "h3",
+			bodyTag: "section",
+			transitionEffect: "slideLeft",
 				// stepsOrientation: "vertical",
 				onFinished: function (event, currentIndex) {
 					console.log(event, currentIndex);
@@ -196,7 +233,7 @@ sudo chmod 775 -Rf <?php echo $project_root_path ?>/storage/*
 								show: true
 							});
 							console.log(result.env.app_key);
-							
+
 							$('#result').html(result.env.app_key)
 
 							//window.location = window.location.protocol + "//" + window.location.host;
