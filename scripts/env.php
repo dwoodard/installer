@@ -47,3 +47,5 @@ exec("sed -i 's/APP_URL=.*/APP_URL={$_POST['app_url']}/g' ".escapeshellarg($envF
 exec("sed -i 's/APP_ENV=.*/APP_ENV={$_POST['app_env']}/g'". escapeshellarg($env));
 exec("sed -i 's/APP_DEBUG=.*/APP_DEBUG={$_POST['app_debug']}/g'". escapeshellarg($env));
 exec("sed -i 's/APP_URL=.*/APP_URL={$result['env']['app_url']}/g'". escapeshellarg($env));
+
+$result['env']['success']  = true;
