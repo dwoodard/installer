@@ -26,11 +26,11 @@
 		<section>
 			<p>This wizard will guide you through the installation and configuration.</p>
 			<h2><?php echo shell_exec("php $project_root_path/artisan --version")?></h2>
-<pre>sudo chmod 775 <?php echo $project_root_path ?>/config
-	sudo chmod 775 <?php echo $project_root_path ?>/config/app.php
-	sudo chmod 775  <?php echo $project_root_path ?>/storage
-	sudo chmod 775 -Rf <?php echo $project_root_path ?>/storage/*
-</pre>
+			<pre>sudo chmod 775 <?php echo $project_root_path ?>/config
+				sudo chmod 775 <?php echo $project_root_path ?>/config/app.php
+				sudo chmod 775  <?php echo $project_root_path ?>/storage
+				sudo chmod 775 -Rf <?php echo $project_root_path ?>/storage/*
+			</pre>
 
 			<p>Make sure Files exsist and directories are writable:</p>
 
@@ -153,14 +153,14 @@
 					<div class="form-group">
 						<label class="col-md-2" for="User">User</label>
 						<div class="col-md-10">
-							<input type="text" id="User" name="User" placeholder="mydb" value="root" class="form-control input-md"/>
+							<input type="text" id="user" name="user" placeholder="mydb" value="root" class="form-control input-md"/>
 						</div>
 					</div>
 
 					<div class="form-group">
-						<label class="col-md-2" for="Password">Password</label>
+						<label class="col-md-2" for="password">Password</label>
 						<div class="col-md-10">
-							<input type="password" id="Password" name="Password" placeholder="mydb" value="root" class="form-control input-md"/>
+							<input type="password" id="password" name="password" placeholder="mydb" value="root" class="form-control input-md"/>
 						</div>
 					</div>
 				</form>
@@ -194,7 +194,10 @@
 				</div>
 
 				<div id="result" class="modal-body">
-
+					<p>Env: {{message.env.success}}</p>
+					<p>Database: {{message.database.success}}</p>
+					
+					<pre>{{message | json}}</pre>
 				</div>
 
 				<div class="modal-footer">
@@ -205,28 +208,37 @@
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
-
+	<script src="js/vuejs/vue.min.js"></script>
 	<script>
-		var data;
+ 
+
+
 		$("#wizard").steps({
 			headerTag: "h3",
 			bodyTag: "section",
 			transitionEffect: "slideLeft",
-				// stepsOrientation: "vertical",
-				onFinished: function (event, currentIndex) {
-					console.log(event, currentIndex);
+			onFinished: function (event, currentIndex) {
+				console.log(event, currentIndex);
 
-					$.ajax({
-						type: "POST",
-						url: "install.php",
-						data: $(":input").serialize(),
-						dataType: "json",
-						success: function(result) {
-							data = result;
+				$.ajax({
+					type: "POST",
+					url: "install.php",
+					data: $(":input").serialize(),
+					dataType: "json",
+					success: function(result) {
 
-							/**
+
+ 							/**
 							* Once finished do what?
 							*/
+
+							var app = new Vue({
+								el: '#result',
+								data: {
+									message: result
+								}
+							})
+
 
 							console.log(result);
 							$('#successModal').modal({
@@ -234,7 +246,7 @@
 							});
 							console.log(result.env.app_key);
 
-							$('#result').html(result.env.app_key)
+							// $('#result').html(result.env.app_key)
 
 							//window.location = window.location.protocol + "//" + window.location.host;
 
@@ -244,12 +256,12 @@
 						}
 
 					});
-				}
+			}
 
 
-			});
-		</script>
-	</body>
-	</html>
+		});
+	</script>
+</body>
+</html>
 
 
